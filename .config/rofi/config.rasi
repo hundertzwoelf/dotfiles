@@ -1,0 +1,12 @@
+configuration {
+theme: "/usr/share/rofi/themes/onedark.rasi";
+lines: 5;
+terminal: "alacritty";
+show-icons: true;
+icon-theme: "Vibrancy-Full-Dark-Teal";
+}
+
+/* nice themes: sidetab */
+             /* material */
+             /* onedark */
+             /* slate */
