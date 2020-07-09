@@ -45,12 +45,10 @@ Plug 'Yggdroot/indentLine'
 " Be more productive
 Plug 'preservim/nerdcommenter'
 Plug 'jeetsukumaran/vim-buffergator'
-" Plug 'kien/ctrlp.vim'
 Plug 'junegunn/fzf.vim'
 Plug 'matze/vim-tex-fold'
 Plug 'preservim/nerdtree'
 Plug 'jiangmiao/auto-pairs'
-Plug 'chrisbra/csv.vim'
 
 " Other
 Plug 'dag/vim-fish'
@@ -60,18 +58,13 @@ Plug 'xolox/vim-misc'
 call plug#end()
 filetype plugin on
 
-" Swap escape and caps inside vim
-" au VimEnter * :silent !setxkbmap -option && setxkbmap -option caps:swapescape
-" au VimLeave * :silent !setxkbmap -option
-
-
 " Turn on syntax highlighting
 syntax on
 
 " For plugins to load correctly
 filetype plugin indent on
 
-" Pick a leader key
+" leader key <Space>
 let mapleader = " "
 
 " Set title
@@ -190,15 +183,15 @@ tnoremap ;; <ESC>
 onoremap ;; <ESC>
 
 " Leader commands
-nnoremap <Leader>c :ColorToggle<CR>
+nnoremap <Leader>h :ColorToggle<CR>
 nnoremap <Leader>tt :vnew term://fish<CR>i
-nmap <leader>j :BuffergatorMruCyclePrev<CR>
-nmap <leader>k :BuffergatorMruCycleNext<CR>
-nmap <leader>bd :bd<CR>
-nmap <leader>e :enew<CR>
-nmap <leader>rp :Repl<CR>
-" nmap <leader>p :CtrlP<cr>
-nmap <leader>s :setlocal spell!<CR>
+nnoremap <leader>j :BuffergatorMruCyclePrev<CR>
+nnoremap <leader>k :BuffergatorMruCycleNext<CR>
+nnoremap <leader>bd :bd<CR>
+nnoremap <leader>e :enew<CR>
+nnoremap <leader>rp :Repl<CR>
+" nnoremap <leader>p :CtrlP<cr>
+nnoremap <leader>s :setlocal spell!<CR>
 
 " F commands
 " remove trailing whitespace
@@ -213,6 +206,9 @@ inoremap <M-j> <ESC>/<++><CR>cw
 inoremap <M-k> <ESC>?<++><CR>cw
 nnoremap <M-j> /<++><CR>cw
 nnoremap <M-k> ?<++><CR>cw
+" inserting placeholder
+inoremap <M-i> <++>
+nnoremap <M-i> i<++><ESC>
 
 """""""""""""""""""
 " Plugin settings "
@@ -275,18 +271,6 @@ let g:tex_fold_additional_envs = ['itemize','align*']
 let g:indentLine_char = '▏'
 let g:indentLine_fileType = ['c', 'cpp', 'python']
 let g:indentLine_setColors = 0
-
-" CtrlP settings
-" let g:ctrlp_custom_ignore = {
-  " \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
-  " \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
-" \}
-" let g:ctrlp_show_hidden = 0
-" let g:ctrlp_working_path_mode = 'r'
-" let g:ctrlp_cmd = 'CtrlPMRU'
-" let g:ctrlp_max_files=0
-" let g:ctrlp_follow_symlinks=1
-" let g:ctrlp_use_caching = 1
 
 " Pymode
 let g:pymode = 1
