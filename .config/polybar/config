@@ -1,0 +1,391 @@
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/polybar/polybar
+;
+;   The README contains a lot of information
+;
+;==========================================================
+
+[colors]
+background = #002f343f
+background-alt = #5e697d
+foreground = #f5f6f7
+foreground-alt = #555
+primary = #5294e2
+secondary = #e60053
+alert = #bd2c40
+
+[bar/bar1]
+; monitor = ${env:MONITOR:HDMI-1}
+width = 100%
+height = 40
+radius = 0.0
+fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+border-size = 0
+border-color = #00000000
+
+padding-left = 0
+padding-right = 0
+
+module-margin-left = 1
+module-margin-right = 1
+
+font-0 = "Ubuntu:size:10"
+font-1 = "Ubuntu Nerd Font Mono:style=Book"
+font-2 = "Ubuntu:size:10:style:italic"
+
+modules-left = jgmenu i3 xwindow 
+modules-center = music
+modules-right = xkeyboard screen network cpu battery date
+
+tray-position = right
+tray-background = ${colors.background}
+tray-detached = false
+tray-maxsize = 24
+
+dpi = 96
+
+;wm-restack = i3
+
+;override-redirect = true
+
+;scroll-up = i3wm-wsnext
+;scroll-down = i3wm-wsprev
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+[module/xwindow]
+type = internal/xwindow
+label = %title%
+label-maxlen = 50
+label-font = 3
+label-foreground = ${colors.foreground}
+
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+click-left = keyboardswitcharoo
+
+; format-prefix = 
+; format-prefix-foreground = ${colors.secondary}
+; format-prefix-underline = ${colors.secondary}
+; format-prefix-font = 4
+
+; label-layout = %{A1:~/.config/polybar/keyboardswitcharoo.fish:} %layout% %{A}
+label-layout = %{A}
+; label-layout-underline = ${colors.secondary}
+
+label-indicator-padding = 2
+label-indicator-margin = 1
+label-indicator-background = ${colors.secondary}
+label-indicator-underline = ${colors.secondary}
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+strip-wsnumbers = true
+enable-scroll = false
+fuzzy-match = true
+
+; Only show workspaces on the same output as the bar
+;pin-workspaces = true
+
+label-mode-padding = 2
+label-mode-foreground = #000
+label-mode-background = ${colors.primary}
+
+
+; focused = Active workspace on focused monitor
+label-focused = %{F#5294e2}%icon%%{F-}   %name% 
+label-focused-background = ${colors.background}
+label-focused-underline= ${colors.primary}
+label-focused-padding = 3
+
+; unfocused = Inactive workspace on any monitor
+label-unfocused = %icon%
+label-unfocused-padding = 3
+
+; visible = Active workspace on unfocused monitor
+label-visible =  %icon% %name%
+label-visible-background = ${self.label-focused-background}
+label-visible-underline = ${self.label-focused-underline}
+label-visible-padding = ${self.label-focused-padding}
+
+; urgent = Workspace with urgency hint set
+label-urgent = %name%
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 2
+
+; Separator in between workspaces
+; label-separator = |
+
+ws-icon-0 = Web;
+ws-icon-1 = Terminal;
+ws-icon-2 = Documents; 
+ws-icon-3 = Media;
+ws-icon-4 = Games;
+ws-icon-5 = Other;
+ws-icon-6 = Other;
+ws-icon-7 = Videochat;
+ws-icon-8 = Chats;
+ws-icon-9 = Music;
+
+[module/spotify]
+type = custom/script
+interval = 1
+format-prefix = ""
+format-prefix-padding = 1
+format-prefix-foreground = #1db954
+format = <label>
+exec = python ~/.config/polybar/spotify_status.py -f '{artist} - {song}'
+; exec = python3 ~/.config/polybar/spotify_status.py -f '{song}'
+format-underline = #1db954
+click-left = playerctl -p spotify play-pause
+click-right = i3-msg "[class="Spotify"] focus"
+
+[module/music]
+type = custom/script
+interval = 1
+format = <label>
+format-prefix = 
+format-prefix-padding = 1
+format-prefix-foreground = #00FF9E 
+format-underline = #00FF9E
+exec = playerctl metadata --format "{{artist}} - {{title}}" 2> /dev/null
+label-maxlen = 50
+click-left = playerctl play-pause
+; click-right = i3-msg workspace "10: Music"
+click-right = playerWS
+
+
+[module/screen]
+type = custom/script
+exec = light -G | cut -f1 -d.
+scroll-up = light -A 5
+scroll-down = light -U 5
+interval = 1
+label =  %output:1:3%%
+format-prefix = 
+format-prefix-padding = 1
+format-prefix-foreground = #ffff00
+format-underline = #ffff00
+
+[module/cpu]
+type = internal/cpu
+interval = 1
+format-prefix = ""
+format-prefix-padding = 1
+format-prefix-foreground = #ffa500
+format-underline = #ffa500
+label = %percentage:2%%
+
+[module/wlan]
+type = internal/network
+interface = wlp1s0
+interval = 3.0
+click-left = nm-connection-editor
+
+format-connected-prefix =  
+format-connected-prefix-foreground = #9f78e1
+format-connected-prefix-padding = 1
+
+format-connected = <label-connected>
+format-connected-underline = #9f78e1
+
+label-connected = %essid%
+; label-connected = 
+; label-connected-foreground = #9f78e1
+
+format-disconnected =  
+; format-disconnected = <label-disconnected>
+format-disconnected-underline = ${self.format-connected-underline}
+label-disconnected = %ifname% disconnected
+label-disconnected-foreground = ${colors.foreground-alt}
+
+[module/date]
+type = internal/date
+interval = 1
+
+date = 
+date-alt = "%a %d. %b %Y"
+
+time = "%H:%M:%S"
+; time-alt = %H:%M:%S
+time-alt = 
+
+format-prefix = 
+format-prefix-foreground = #0ff
+format-prefix-padding = 1
+format-underline = #0ff
+
+label = %date% %time%
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+;format-volume = <label-volume> <bar-volume>
+format-volume = <label-volume>
+format-volume-prefix = 
+format-volume-prefix-padding = 1
+label-volume = %percentage%%
+label-volume-foreground = ${root.foreground}
+
+label-muted =  muted
+format-muted-prefix = 
+format-muted-prefix-padding = 1
+format-muted-foreground = #666
+
+click-middle = pavucontrol &
+
+; bar-volume-width = 10
+; bar-volume-foreground-0 = #55aa55
+; bar-volume-foreground-1 = #55aa55
+; bar-volume-foreground-2 = #55aa55
+; bar-volume-foreground-3 = #55aa55
+; bar-volume-foreground-4 = #55aa55
+; bar-volume-foreground-5 = #f5a70a
+; bar-volume-foreground-6 = #ff5555
+; bar-volume-gradient = false
+; bar-volume-indicator = |
+; bar-volume-indicator-font = 2
+; bar-volume-fill = ─
+; bar-volume-fill-font = 2
+; bar-volume-empty = ─
+; bar-volume-empty-font = 2
+; bar-volume-empty-foreground = ${colors.foreground-alt}
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = AC
+full-at = 98 
+
+; CHARGING
+format-charging = <animation-charging> <label-charging>
+format-charging-underline = #3399ff
+
+; DISCHARGING
+format-discharging = <animation-discharging> <label-discharging>
+format-discharging-underline = #ffcc00
+
+format-full-prefix = 
+format-full-prefix-foreground = #00ff00
+format-full-prefix-padding = 1
+format-full-underline = #00ff00
+
+animation-charging-0 =  
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-foreground = #39f
+animation-charging-framerate = 2000
+; 
+animation-discharging-0 = 
+animation-discharging-1 =  
+animation-discharging-2 =  
+animation-discharging-3 = 
+animation-discharging-foreground = #fc0
+animation-discharging-framerate = 2000
+
+[module/powermenu]
+type = custom/menu
+
+expand-left = true
+
+format-spacing = 1
+
+label-open = 
+label-open-foreground = ${colors.secondary}
+label-close = 
+label-close-foreground = ${colors.secondary}
+label-separator = |
+label-separator-foreground = ${colors.foreground-alt}
+
+menu-0-0 = reboot
+menu-0-0-exec = menu-open-1
+menu-0-1 = power off
+menu-0-1-exec = menu-open-2
+menu-0-2 = suspend
+menu-0-2-exec = menu-open-3
+
+menu-1-0 = cancel
+menu-1-0-exec = menu-open-0
+menu-1-1 = reboot
+menu-1-1-exec = systemctl reboot
+
+menu-2-0 = power off
+menu-2-0-exec = systemctl poweroff
+menu-2-1 = cancel
+menu-2-1-exec = menu-open-0
+
+menu-3-0 = suspend
+menu-3-0-exec = systemctl suspend
+menu-3-1 = cancel
+menu-3-1-exec = menu-open-0
+
+; [module/kdeconnect]  
+; type = custom/script  
+; exec = "~/.config/polybar/polybar-kdeconnect.sh -d"  
+; tail = true
+
+; [module/title]
+; type = internal/xwindow
+; format-padding = 4
+; label-maxlen = 50
+
+[module/jgmenu]
+type = custom/text
+content-padding = 2
+content = 
+click-left = "jgmenu_run >/dev/null 2>&1 &"
+
+[module/network]
+type = internal/network
+interface = wlp1s0
+interval = 1.0
+format-connected = <label-connected>
+format-connected-foreground = ${colors.foreground}
+format-connected-underline = #9f78e1
+format-connected-prefix = 
+format-connected-prefix-padding = 1
+format-connected-prefix-foreground = #9f78e1
+label-connected = %{A1:nm-connection-editor:} %downspeed:9% %{A}
+
+format-disconnected = <label-disconnected>
+label-disconnected = %{A1:nm-connection-editor:} No connection %{A}
+format-disconnected-underline = ${colors.alert}
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+pseudo-transparency = true
+
+[global/wm]
+margin-top = 5
+margin-bottom = 0
+format-prefix-padding = 1
+
+; vim: ft=dosini
