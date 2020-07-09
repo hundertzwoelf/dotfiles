@@ -233,10 +233,10 @@ bindsym --release $mod+shift+x exec --no-startup-id xkill
 exec --no-startup-id xss-lock -l light-locker-command -l 
 
 # Enable alternating splits (bspwm style)
-# exec --no-startup-id /home/patrick/.config/i3/scripts/alternating_layouts.py
+# exec --no-startup-id alternating_layouts.py
 
 # Set libinput settings
-exec --no-startup-id ~/.config/i3/scripts/libinput_settings.fish
+exec --no-startup-id libinput_settings.fish
 
 # Set a wallpaper
 exec --no-startup-id nitrogen --restore
@@ -253,5 +253,5 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id libinput-gestures-setup start
 exec --no-startup-id indicator-cpufreq
 exec --no-startup-id light-locker
-exec --no-startup-id ~/.config/i3/scripts/i3-swallow.py
+exec --no-startup-id i3-swallow.py
 exec --no-startup-id redshift
