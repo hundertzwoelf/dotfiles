@@ -240,40 +240,6 @@ format-underline = #0ff
 
 label = %date% %time%
 
-[module/pulseaudio]
-type = internal/pulseaudio
-
-;format-volume = <label-volume> <bar-volume>
-format-volume = <label-volume>
-format-volume-prefix = 
-format-volume-prefix-padding = 1
-label-volume = %percentage%%
-label-volume-foreground = ${root.foreground}
-
-label-muted =  muted
-format-muted-prefix = 
-format-muted-prefix-padding = 1
-format-muted-foreground = #666
-
-click-middle = pavucontrol &
-
-; bar-volume-width = 10
-; bar-volume-foreground-0 = #55aa55
-; bar-volume-foreground-1 = #55aa55
-; bar-volume-foreground-2 = #55aa55
-; bar-volume-foreground-3 = #55aa55
-; bar-volume-foreground-4 = #55aa55
-; bar-volume-foreground-5 = #f5a70a
-; bar-volume-foreground-6 = #ff5555
-; bar-volume-gradient = false
-; bar-volume-indicator = |
-; bar-volume-indicator-font = 2
-; bar-volume-fill = ─
-; bar-volume-fill-font = 2
-; bar-volume-empty = ─
-; bar-volume-empty-font = 2
-; bar-volume-empty-foreground = ${colors.foreground-alt}
-
 [module/battery]
 type = internal/battery
 battery = BAT0
@@ -299,7 +265,7 @@ animation-charging-2 = 
 animation-charging-3 = 
 animation-charging-foreground = #39f
 animation-charging-framerate = 2000
-; 
+ 
 animation-discharging-0 = 
 animation-discharging-1 =  
 animation-discharging-2 =  
