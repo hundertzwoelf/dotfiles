@@ -54,6 +54,7 @@ bindsym $mod+Shift+Right move right
 
 # splits
 bindsym $mod+backslash split toggle
+default_orientation horizontal
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -86,13 +87,14 @@ set $ws9 "9: Chats"
 set $ws10 "10: Music"
 
 # automatically move programs to certain workspaces
+# for some reason spotify doesn't work like the others
 
-for_window [class="Kodi"] move to workspace $ws4
-for_window [class="vlc"] move to workspace $ws4
-for_window [class="Rambox"] move to workspace $ws9
-for_window [class="Ferdi"] move to workspace $ws9
-for_window [class="Slack"] move to workspace $ws9
-for_window [class="discord"] move to workspace $ws9
+assign [class="Kodi"] $ws4
+assign [class="vlc"] $ws4
+assign [class="Rambox"] $ws9
+assign [class="Ferdi"] $ws9
+assign [class="Slack"] $ws9
+assign [class="discord"] $ws9
 for_window [class="Spotify"] move to workspace $ws10
 
 # switch and move to last workspace
@@ -139,7 +141,7 @@ bindsym $mod+Right resize grow width 20 px or 3 ppt
 
 ### Focus urgent windows
 for_window [urgent="latest"] focus
-focus_on_window_activation focus
+focus_on_window_activation smart
 
 # SET COLORS
 
@@ -154,11 +156,12 @@ client.focused          $border-color   $border-color   $text-color             
 client.focused_inactive $bg-color       $bg-color       $inactive-text-color    
 client.unfocused        $bg-color       $bg-color       $inactive-text-color    
 
-hide_edge_borders none
+hide_edge_borders smart
 smart_borders on
 
 # Configure gaps
-for_window [class=".*"] border pixel 2
+# for_window [class=".*"] border pixel 2
+default_border pixel 2
 
 gaps inner 7
 gaps outer 10
