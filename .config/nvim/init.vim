@@ -12,48 +12,48 @@ filetype off
 call plug#begin()
 
 " Syntax
-Plug 'scrooloose/syntastic'
-Plug 'PotatoesMaster/i3-vim-syntax'
+Plug 'scrooloose/syntastic' " better syntax highlighting
+Plug 'PotatoesMaster/i3-vim-syntax' " enabling proper syntax highlighting for i3 config file
 
 " Completion
-Plug 'ajh17/VimCompletesMe'
-Plug 'davidhalter/jedi-vim'
+Plug 'ajh17/VimCompletesMe' " better completion
+Plug 'davidhalter/jedi-vim' " showing function headers
 
 " Tex
-Plug 'lervag/vimtex'
+Plug 'lervag/vimtex' " nice integration of tex into neovim
 
 " Pandoc
-Plug 'conornewton/vim-pandoc-markdown-preview'
+Plug 'conornewton/vim-pandoc-markdown-preview' " preview markdown files directly in zathura
 
 " R
-Plug 'jalvesaq/Nvim-R'
+Plug 'jalvesaq/Nvim-R' " R integration with REPL etc.
 
 " Python
-Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
-Plug 'rhysd/reply.vim'
-Plug 'KangOl/vim-pudb'
+Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' } " code/syntax checking etc
+Plug 'rhysd/reply.vim' " allow to open REPL's inside neovim
+Plug 'KangOl/vim-pudb' " python debugging
 
 " Theming
-Plug 'mhinz/vim-startify'
-Plug 'ryanoasis/vim-devicons'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'rafi/awesome-vim-colorschemes'
-Plug 'vim-scripts/colorizer'
-Plug 'Yggdroot/indentLine'
+Plug 'mhinz/vim-startify' " Landing page
+Plug 'ryanoasis/vim-devicons' " Icons for Nerdtree etc
+Plug 'vim-airline/vim-airline' " Bottom bar
+Plug 'vim-airline/vim-airline-themes' " Bottom bar themes
+Plug 'rafi/awesome-vim-colorschemes' " several colorschemes
+Plug 'vim-scripts/colorizer' " show hex codes as actual colors
+Plug 'Yggdroot/indentLine' " adding an indentation character for python
+Plug 'chuling/equinusocio-material.vim' " nice theme
 
 " Be more productive
-Plug 'preservim/nerdcommenter'
-Plug 'jeetsukumaran/vim-buffergator'
-Plug 'junegunn/fzf.vim'
-Plug 'matze/vim-tex-fold'
-Plug 'preservim/nerdtree'
-Plug 'jiangmiao/auto-pairs'
+Plug 'preservim/nerdcommenter' " comment lines with a shortcut
+Plug 'jeetsukumaran/vim-buffergator' " handling buffers more easily
+Plug 'junegunn/fzf.vim' " fuzzy-finding files and other things
+Plug 'matze/vim-tex-fold' " allow folding in tex docs
+Plug 'preservim/nerdtree' " nice folder structure tree
 
 " Other
-Plug 'dag/vim-fish'
-Plug 'xolox/vim-colorscheme-switcher'
-Plug 'xolox/vim-misc'
+Plug 'dag/vim-fish' " integrate fish shell better
+Plug 'xolox/vim-colorscheme-switcher' " adding a shortcut to switch themes (F8)
+Plug 'xolox/vim-misc' " needed for color-scheme-switcher (I think?)
 
 call plug#end()
 filetype plugin on
@@ -111,12 +111,12 @@ runtime! macros/matchit.vim
 " Color scheme (terminal)
 set background=dark
 set termguicolors
-colorscheme challenger_deep
+colorscheme equinusocio_material
 
 " Highlighting
 hi Normal guibg=NONE ctermbg=NONE
 hi Conceal guifg=1 guibg=NONE
-hi Folded guibg=#86e295
+" hi Folded guibg=#86e295
 
 " Allow hidden buffers
 set hidden
