@@ -1,12 +1,42 @@
 # i3 config file
 
+########################
+### GENERAL SETTINGS ###
+########################
+
 # set mod key to super
 set $mod Mod4
 
+# set a standard terminal
+set $terminal alacritty
+
+# set a font
 font pango:Ubuntu Monospace 12
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
+
+# Set workspace names
+set $ws1 "1: Web"
+set $ws2 "2: Terminal"
+set $ws3 "3: Documents"
+set $ws4 "4: Media"
+set $ws5 "5: Games"
+set $ws6 "6: Other"
+set $ws7 "7: Other"
+set $ws8 "8: Videochat"
+set $ws9 "9: Chats"
+set $ws10 "10: Music"
+
+# automatically move programs to certain workspaces
+# for some reason spotify doesn't work like the others
+assign [class="Kodi"] $ws4
+assign [class="vlc"] $ws4
+assign [class="Rambox"] $ws9
+assign [class="Ferdi"] $ws9
+assign [class="Slack"] $ws9
+assign [class="discord"] $ws9
+for_window [class="Spotify"] move to workspace $ws10
 
 # Make certain windows floating all the time
 for_window [class="Gnome-calculator"] floating enable
@@ -24,8 +54,41 @@ for_window [window_role="Preferences"] floating enable
 for_window [window_type="dialog"] floating enable
 for_window [window_type="menu"] floating enable
 
+### Focus urgent windows
+for_window [urgent="latest"] focus
+focus_on_window_activation focus
+
+#############
+### LOOKS ###
+#############
+
+# define colors
+set $bg-color             #1a1a1a
+set $text-color           #f5f6f7
+set $inactive-text-color  #f5f6f7
+set $urgent-bg-color      #880000
+set $border-color         #f5f6f7
+
+# class                 border          backgr.         text                    indicator
+client.focused          $border-color   $border-color   $text-color             #ffaa00
+client.focused_inactive $bg-color       $bg-color       $inactive-text-color
+client.unfocused        $bg-color       $bg-color       $inactive-text-color
+
+hide_edge_borders smart
+smart_borders on
+
+# Configure gaps
+default_border pixel 2
+gaps inner 7
+gaps outer 10
+smart_gaps on
+
+#################
+### SHORTCUTS ###
+#################
+
 # open up a terminal
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec $terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -73,30 +136,6 @@ bindsym $mod+space focus mode_toggle
 # focus the parent container
 bindsym $mod+a focus parent
 
-# Define names for default workspaces for which we configure key bindings later on.
-# We use variables to avoid repeating the names in multiple places.
-set $ws1 "1: Web"
-set $ws2 "2: Terminal"
-set $ws3 "3: Documents"
-set $ws4 "4: Media"
-set $ws5 "5: Games"
-set $ws6 "6: Other"
-set $ws7 "7: Other"
-set $ws8 "8: Videochat"
-set $ws9 "9: Chats"
-set $ws10 "10: Music"
-
-# automatically move programs to certain workspaces
-# for some reason spotify doesn't work like the others
-
-assign [class="Kodi"] $ws4
-assign [class="vlc"] $ws4
-assign [class="Rambox"] $ws9
-assign [class="Ferdi"] $ws9
-assign [class="Slack"] $ws9
-assign [class="discord"] $ws9
-for_window [class="Spotify"] move to workspace $ws10
-
 # switch and move to last workspace
 bindsym $mod+Tab workspace back_and_forth
 bindsym $mod+Shift+Tab move container to workspace back_and_forth
@@ -129,45 +168,18 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+# power menu
+bindsym $mod+Shift+e exec rofi -show Power -modi Power:$HOME/.config/rofi/power.sh
 
 # resize window (you can also use the mouse for that)
-
 bindsym $mod+Left resize shrink width 20 px or 3 ppt
 bindsym $mod+Down resize grow height 20 px or 3 ppt
 bindsym $mod+Up resize shrink height 20 px or 3 ppt
 bindsym $mod+Right resize grow width 20 px or 3 ppt
 
-### Focus urgent windows
-for_window [urgent="latest"] focus
-focus_on_window_activation smart
-
-# SET COLORS
-
-set $bg-color             #1a1a1a
-set $text-color           #f5f6f7
-set $inactive-text-color  #f5f6f7
-set $urgent-bg-color      #880000
-set $border-color         #f5f6f7
-
-# class                 border          backgr.         text                    indicator
-client.focused          $border-color   $border-color   $text-color             #ffaa00
-client.focused_inactive $bg-color       $bg-color       $inactive-text-color    
-client.unfocused        $bg-color       $bg-color       $inactive-text-color    
-
-hide_edge_borders smart
-smart_borders on
-
-# Configure gaps
-# for_window [class=".*"] border pixel 2
-default_border pixel 2
-
-gaps inner 7
-gaps outer 10
-smart_gaps on
-
-### CUSTOM KEYBINDINGS
+##########################
+### CUSTOM KEYBINDINGS ###
+##########################
 
 # PulseAudio key bindings
 # (managed by volumeicon now)
@@ -201,10 +213,10 @@ bindsym XF86PowerOff exec systemctl suspend
 bindsym $mod+c exec --no-startup-id /usr/bin/chromium %U
 
 # Start ranger
-bindsym $mod+r exec --no-startup-id alacritty -e ranger
+bindsym $mod+r exec --no-startup-id $terminal -e ranger
 
 # Start nvim
-bindsym $mod+v exec --no-startup-id alacritty -e nvim
+bindsym $mod+v exec --no-startup-id $terminal -e nvim
 
 # Toggle picom
 bindsym $mod+p exec --no-startup-id picom-toggle
@@ -231,12 +243,12 @@ bindsym $mod+shift+g gaps inner all minus 5
 # Launch xkill
 bindsym --release $mod+shift+x exec --no-startup-id xkill
 
-### AUTOSTART
-# Make suspend use light-locker
-exec --no-startup-id xss-lock -l light-locker-command -l 
+#################
+### AUTOSTART ### 
+#################
 
-# Enable alternating splits (bspwm style)
-# exec --no-startup-id alternating_layouts.py
+# Make suspend use light-locker
+exec --no-startup-id xss-lock -l light-locker-command -l
 
 # Set libinput settings
 exec --no-startup-id libinput_settings.fish
