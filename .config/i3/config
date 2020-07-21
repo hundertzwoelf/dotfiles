@@ -54,7 +54,7 @@ for_window [window_role="Preferences"] floating enable
 for_window [window_type="dialog"] floating enable
 for_window [window_type="menu"] floating enable
 
-### Focus urgent windows
+# Focus urgent windows
 for_window [urgent="latest"] focus
 focus_on_window_activation focus
 
@@ -164,6 +164,9 @@ bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
+bindsym $mod+grave scratchpad show
+bindsym $mod+Shift+grave move container to scratchpad
+
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -244,10 +247,10 @@ bindsym $mod+shift+g gaps inner all minus 5
 bindsym --release $mod+shift+x exec --no-startup-id xkill
 
 #################
-### AUTOSTART ### 
+### AUTOSTART ###
 #################
 
-# Make suspend use light-locker
+# hook light-locker into suspend
 exec --no-startup-id xss-lock -l light-locker-command -l
 
 # Set libinput settings
@@ -270,3 +273,4 @@ exec --no-startup-id indicator-cpufreq
 exec --no-startup-id light-locker
 exec --no-startup-id i3-swallow.py
 exec --no-startup-id redshift
+exec --no-startup-id switchcaps

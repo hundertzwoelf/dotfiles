@@ -16,7 +16,7 @@ then
             shutdown now
             ;;
         *Reboot)
-            reboot
+            systemctl reboot
             ;;
     esac
 else
