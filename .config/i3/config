@@ -35,6 +35,7 @@ assign [class="vlc"] $ws4
 assign [class="Rambox"] $ws9
 assign [class="Ferdi"] $ws9
 assign [class="Slack"] $ws9
+assign [class="TelegramDesktop"] $ws9
 assign [class="discord"] $ws9
 for_window [class="Spotify"] move to workspace $ws10
 
@@ -227,6 +228,9 @@ bindsym $mod+p exec --no-startup-id picom-toggle
 # Toggle Drive mounting
 bindsym $mod+m exec --no-startup-id toggleDrive
 
+# Random wallpaper
+bindsym $mod+shift+w exec --no-startup-id random-wall.sh
+
 # Switch keyboard layout from German to English and vice versa
 bindsym $mod+Mod1+space exec --no-startup-id keyboardswitcharoo
 bindsym Mod1+space exec --no-startup-id switchcaps
@@ -257,7 +261,8 @@ exec --no-startup-id xss-lock -l light-locker-command -l
 exec --no-startup-id libinput_settings.fish
 
 # Set a wallpaper
-exec --no-startup-id nitrogen --restore
+# exec --no-startup-id nitrogen --restore
+exec --no-startup-id random-wall.sh
 
 # Launch essential programs
 exec_always --no-startup-id ~/.config/polybar/launch.sh
@@ -267,7 +272,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id volumeicon
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec --no-startup-id /usr/lib/polkit-kde-authentication-agent-1
 exec --no-startup-id libinput-gestures-setup start
 exec --no-startup-id indicator-cpufreq
 exec --no-startup-id light-locker

@@ -47,11 +47,11 @@ padding-right = 0
 module-margin-left = 1
 module-margin-right = 1
 
-font-0 = "Ubuntu:size:10"
+font-0 = "Ubuntu:size=12"
 font-1 = "Ubuntu Nerd Font Mono:style=Book"
-font-2 = "Ubuntu:size:10:style:italic"
+font-2 = "Ubuntu:size=12:style:italic"
 
-modules-left = jgmenu i3 xwindow 
+modules-left = jgmenu i3 xwindow
 modules-center = music
 modules-right = xkeyboard screen network cpu battery date
 
@@ -116,7 +116,7 @@ label-mode-background = ${colors.primary}
 
 
 ; focused = Active workspace on focused monitor
-label-focused = %{F#5294e2}%icon%%{F-}   %name% 
+label-focused = %{F#5294e2}%icon%%{F-}   %name%
 label-focused-background = ${colors.background}
 label-focused-underline= ${colors.primary}
 label-focused-padding = 3
@@ -141,7 +141,7 @@ label-urgent-padding = 2
 
 ws-icon-0 = Web;
 ws-icon-1 = Terminal;
-ws-icon-2 = Documents; 
+ws-icon-2 = Documents;
 ws-icon-3 = Media;
 ws-icon-4 = Games;
 ws-icon-5 = Other;
@@ -169,7 +169,7 @@ interval = 1
 format = <label>
 format-prefix = 
 format-prefix-padding = 1
-format-prefix-foreground = #00FF9E 
+format-prefix-foreground = #00FF9E
 format-underline = #00FF9E
 exec = playerctl metadata --format "{{artist}} - {{title}}" 2> /dev/null
 label-maxlen = 50
@@ -192,12 +192,15 @@ format-underline = #ffff00
 
 [module/cpu]
 type = internal/cpu
-interval = 1
+interval = 2
 format-prefix = ""
 format-prefix-padding = 1
 format-prefix-foreground = #ffa500
 format-underline = #ffa500
-label = %percentage:2%%
+label = %{A1:notify-send "$(ps -Ao user,comm,pid,pcpu --sort=-pcpu | head -n 6)":} %percentage:2%% %{A}
+; click-left = notify-send "$(ps -Ao user,comm,pid,pcpu --sort=-pcpu | head -n 6)"
+click-left = notify-send "test"
+; %{A1:command:} clickable text %{A}
 
 [module/wlan]
 type = internal/network
@@ -205,7 +208,7 @@ interface = wlp1s0
 interval = 3.0
 click-left = nm-connection-editor
 
-format-connected-prefix =  
+format-connected-prefix = 
 format-connected-prefix-foreground = #9f78e1
 format-connected-prefix-padding = 1
 
@@ -216,7 +219,7 @@ label-connected = %essid%
 ; label-connected = 
 ; label-connected-foreground = #9f78e1
 
-format-disconnected =  
+format-disconnected =
 ; format-disconnected = <label-disconnected>
 format-disconnected-underline = ${self.format-connected-underline}
 label-disconnected = %ifname% disconnected
@@ -226,12 +229,12 @@ label-disconnected-foreground = ${colors.foreground-alt}
 type = internal/date
 interval = 1
 
-date = 
+date =
 date-alt = "%a %d. %b %Y"
 
 time = "%H:%M:%S"
 ; time-alt = %H:%M:%S
-time-alt = 
+time-alt =
 
 format-prefix = 
 format-prefix-foreground = #0ff
@@ -244,7 +247,7 @@ label = %date% %time%
 type = internal/battery
 battery = BAT0
 adapter = AC
-full-at = 98 
+full-at = 98
 
 ; CHARGING
 format-charging = <animation-charging> <label-charging>
@@ -259,16 +262,16 @@ format-full-prefix-foreground = #00ff00
 format-full-prefix-padding = 1
 format-full-underline = #00ff00
 
-animation-charging-0 =  
+animation-charging-0 = 
 animation-charging-1 = 
 animation-charging-2 = 
 animation-charging-3 = 
 animation-charging-foreground = #39f
 animation-charging-framerate = 2000
- 
+
 animation-discharging-0 = 
-animation-discharging-1 =  
-animation-discharging-2 =  
+animation-discharging-1 = 
+animation-discharging-2 = 
 animation-discharging-3 = 
 animation-discharging-foreground = #fc0
 animation-discharging-framerate = 2000
@@ -309,9 +312,9 @@ menu-3-0-exec = systemctl suspend
 menu-3-1 = cancel
 menu-3-1-exec = menu-open-0
 
-; [module/kdeconnect]  
-; type = custom/script  
-; exec = "~/.config/polybar/polybar-kdeconnect.sh -d"  
+; [module/kdeconnect]
+; type = custom/script
+; exec = "~/.config/polybar/polybar-kdeconnect.sh -d"
 ; tail = true
 
 ; [module/title]

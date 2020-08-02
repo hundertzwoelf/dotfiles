@@ -288,6 +288,7 @@ let g:startify_custom_header =
 
 
 " fzf-vim
+let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
 let g:fzf_preview_window = 'right:60%'
 nnoremap <C-P> :Files ~<CR>
 nnoremap <leader>p :Files<CR>
