@@ -1,6 +1,7 @@
 #!/bin/bash
 
-OPTIONS="\tLogout\n\tSuspend\n\tShutdown\n\tReboot"
+OPTIONS="\tSuspend\n\tLogout\n\tShutdown\n\tReboot"
+
 
 option=`echo -e $OPTIONS | awk '{print $1}' | tr -d '\r\n\t'`
 if [ "$@" ]

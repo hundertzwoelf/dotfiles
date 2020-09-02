@@ -216,6 +216,7 @@ nnoremap <M-i> i<++><ESC>
 
 " Syntastic
 let g:syntastic_tex_lacheck_quiet_messages = { 'regex': '\Vpossible unwanted space at' }
+let g:syntastic_tex_chktex_quiet_messages = { 'regex': '\VYou should enclose the previous parenthesis' }
 
 " Tex options
 let g:vimtex_compiler_latexmk = {
@@ -244,8 +245,8 @@ au ColorScheme * hi clear Conceal
 
 function SetTexOptions()
     setlocal spell
-    iabbrev align \begin{align*}<CR>]]<ESC>O
-    iabbrev verbatim \begin{verbatim}<CR>]]<ESC>O
+    " iabbrev align \begin{align*}<CR>]]<ESC>O
+    " iabbrev verbatim \begin{verbatim}<CR>]]<ESC>O
     setlocal cole=2
 endfunction
 

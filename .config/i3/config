@@ -68,7 +68,8 @@ set $bg-color             #1a1a1a
 set $text-color           #f5f6f7
 set $inactive-text-color  #f5f6f7
 set $urgent-bg-color      #880000
-set $border-color         #f5f6f7
+# set $border-color         #f5f6f7
+set $border-color         #FF0000
 
 # class                 border          backgr.         text                    indicator
 client.focused          $border-color   $border-color   $text-color             #ffaa00
@@ -241,7 +242,7 @@ bindsym $mod+shift+w exec --no-startup-id random-wall.sh
 
 # Switch keyboard layout from German to English and vice versa
 bindsym $mod+Mod1+space exec --no-startup-id keyboardswitcharoo
-bindsym Mod1+space exec --no-startup-id switchcaps
+# bindsym Mod1+space exec --no-startup-id switchcaps
 
 # Open emoji picker
 bindsym $mod+semicolon exec --no-startup-id splatmoji type
@@ -279,8 +280,7 @@ exec --no-startup-id dunst -i
 exec --no-startup-id nm-applet
 exec --no-startup-id volumeicon
 exec --no-startup-id xfce4-power-manager
-exec --no-startup-id pamac-tray
-exec --no-startup-id /usr/lib/polkit-kde-authentication-agent-1
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id libinput-gestures-setup start
 exec --no-startup-id indicator-cpufreq
 exec --no-startup-id light-locker
