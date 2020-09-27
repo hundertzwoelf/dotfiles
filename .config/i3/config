@@ -69,7 +69,8 @@ set $text-color           #f5f6f7
 set $inactive-text-color  #f5f6f7
 set $urgent-bg-color      #880000
 # set $border-color         #f5f6f7
-set $border-color         #FF0000
+# set $border-color         #FF0000
+set $border-color         #61AFEF
 
 # class                 border          backgr.         text                    indicator
 client.focused          $border-color   $border-color   $text-color             #ffaa00
@@ -80,7 +81,7 @@ hide_edge_borders smart
 smart_borders on
 
 # Configure gaps
-default_border pixel 2
+default_border pixel 3
 gaps inner 7
 gaps outer 10
 smart_gaps on
@@ -166,11 +167,15 @@ bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
-bindsym $mod+i focus output left
+bindsym $mod+y focus output left
+bindsym $mod+u focus output down
+bindsym $mod+i focus output up   
 bindsym $mod+o focus output right
 
-bindsym $mod+Shift+i move workspace to output left
-bindsym $mod+Shift+o move workspace to output right
+bindsym $mod+Shift+y move workspace to output left
+bindsym $mod+Shift+u move workspace to output down
+bindsym $mod+Shift+i move workspace to output up
+bindsym $mod+Shift+o move workspace to output right   
 
 bindsym $mod+grave scratchpad show
 bindsym $mod+Shift+grave move container to scratchpad

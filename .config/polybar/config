@@ -17,7 +17,8 @@
 ;==========================================================
 
 [colors]
-background = #002f343f
+; background = #002f343f
+background = #2f343f
 background-alt = #5e697d
 foreground = #f5f6f7
 foreground-alt = #555555
@@ -51,7 +52,7 @@ font-0 = "Ubuntu:size=12"
 font-1 = "Ubuntu Nerd Font Mono:style=Book"
 font-2 = "Ubuntu:size=12:style:italic"
 
-modules-left = jgmenu i3 xwindow
+modules-left = i3 xwindow
 modules-center = music
 modules-right = xkeyboard screen network cpu battery date
 
@@ -182,11 +183,12 @@ format-prefix = 
 format-prefix-padding = 1
 format-prefix-foreground = #00FF9E
 format-underline = #00FF9E
-exec = playerctl metadata --format "{{artist}} - {{title}}" 2> /dev/null
+; exec = playerctl metadata --format "{{artist}} - {{title}}" 2> /dev/null
+exec = music_bar.sh
 label-maxlen = 50
-click-left = playerctl play-pause
-; click-right = i3-msg workspace "10: Music"
-click-right = playerWS
+click-left = music_bar.sh --play
+click-right = music_bar.sh --ws
+click-middle= music_bar.sh --switch
 
 
 [module/screen]

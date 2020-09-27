@@ -215,8 +215,8 @@ nnoremap <M-i> i<++><ESC>
 """""""""""""""""""
 
 " Syntastic
-let g:syntastic_tex_lacheck_quiet_messages = { 'regex': '\Vpossible unwanted space at' }
-let g:syntastic_tex_chktex_quiet_messages = { 'regex': '\VYou should enclose the previous parenthesis' }
+let g:syntastic_tex_lacheck_quiet_messages = { 'regex': '\Vpossible unwanted space at'}
+let g:syntastic_tex_chktex_quiet_messages = { 'regex': ['\VYou should enclose the previous parenthesis', '\Vwrong length of dash'] }
 
 " Tex options
 let g:vimtex_compiler_latexmk = {
@@ -250,6 +250,13 @@ function SetTexOptions()
     setlocal cole=2
 endfunction
 
+" Tex folding
+let g:tex_fold_enabled=1
+let g:tex_fold_override_foldtext = 1
+let g:tex_fold_sec_char = '>'
+let g:tex_fold_env_char = 'E'
+let g:tex_fold_additional_envs = ['itemize','align*']
+
 " Airline + Tabline
 let g:airline_powerline_fonts = 1
 let g:airline_theme='deus'
@@ -260,13 +267,6 @@ let g:airline#extensions#tabline#formatter = 'jsformatter'
 " Nerdtree
 let g:NERDSpaceDelims = 1
 map <C-n> :NERDTreeToggle<CR>
-
-" Tex folding
-let g:tex_fold_enabled=1
-let g:tex_fold_override_foldtext = 1
-let g:tex_fold_sec_char = '>'
-let g:tex_fold_env_char = 'E'
-let g:tex_fold_additional_envs = ['itemize','align*']
 
 " Better indentation
 let g:indentLine_char = '▏'
