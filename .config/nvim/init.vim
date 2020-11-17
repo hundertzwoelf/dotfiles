@@ -269,19 +269,22 @@ let g:NERDSpaceDelims = 1
 map <C-n> :NERDTreeToggle<CR>
 
 " Better indentation
-let g:indentLine_char = '▏'
-let g:indentLine_fileType = ['c', 'cpp', 'python']
-let g:indentLine_setColors = 0
+" let g:indentLine_char = '▏'
+" let g:indentLine_fileType = ['c', 'cpp', 'python']
+" let g:indentLine_setColors = 0
 
 " Pymode
 let g:pymode = 1
 let g:pymode_lint = 1 " code checking enabled
-let g:pymode_lint_ignore = ["E501"] " ignore line too long
+let g:pymode_lint_ignore = ["E501", "E302"] " ignore line too long
 let g:pymode_options = 1
 let g:pymode_preview_height = 12
 let g:pymode_preview_position = 'botright'
 let g:pymode_run = 1
 let g:pymode_run_bind = '<F12>'
+
+" Disable pep8
+" let g:python_recommended_style = 0
 
 " vim-startify
 let g:startify_custom_header =

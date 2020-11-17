@@ -46,6 +46,7 @@ for_window [class="Software-properties-gtk"] floating enable
 for_window [class="Nm-connection-editor"] floating enable
 for_window [class="Dconf-editor"] floating enable
 for_window [class="R_x11"] floating enable
+for_window [class="Blueman-manager"] floating enable
 
 # Standardize floating for certain window roles
 for_window [window_role="pop-up"] floating enable
@@ -184,10 +185,14 @@ bindsym $mod+Shift+grave move container to scratchpad
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
+
+# custom rofi menus
 # power menu
 bindsym $mod+Shift+e exec rofi -show Power -modi Power:$HOME/.config/rofi/power.sh
 # screen layout menu
 bindsym $mod+Shift+s exec rofi -show Screen -modi Screen:$HOME/.config/rofi/screen.sh
+# pulseaudio sink menu
+bindsym $mod+Shift+p exec $HOME/.config/rofi/pulse-sink.sh
 
 # resize window (you can also use the mouse for that)
 bindsym $mod+Left resize shrink width 20 px or 3 ppt
@@ -245,10 +250,6 @@ bindsym $mod+m exec --no-startup-id toggleDrive
 # Random wallpaper
 bindsym $mod+shift+w exec --no-startup-id random-wall.sh
 
-# Switch keyboard layout from German to English and vice versa
-bindsym $mod+Mod1+space exec --no-startup-id keyboardswitcharoo
-# bindsym Mod1+space exec --no-startup-id switchcaps
-
 # Open emoji picker
 bindsym $mod+semicolon exec --no-startup-id splatmoji type
 bindsym $mod+shift+semicolon exec --no-startup-id splatmoji copy
@@ -267,6 +268,9 @@ bindsym --release $mod+shift+x exec --no-startup-id xkill
 #################
 ### AUTOSTART ###
 #################
+
+# set the keyboard layouts
+exec setxkbmap -layout us,de,ro -variant alt-intl-unicode,, -option "grp:alt_space_toggle"
 
 # hook light-locker into suspend
 exec --no-startup-id xss-lock -l light-locker-command -l
