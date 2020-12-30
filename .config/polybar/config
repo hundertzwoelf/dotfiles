@@ -18,7 +18,8 @@
 
 [colors]
 ; background = #002f343f
-background = #2f343f
+; background = #2f343f
+background = #14161B
 background-alt = #5e697d
 foreground = #f5f6f7
 foreground-alt = #555555
@@ -48,9 +49,13 @@ padding-right = 0
 module-margin-left = 1
 module-margin-right = 1
 
-font-0 = "Ubuntu:size=12"
-font-1 = "Ubuntu Nerd Font Mono:style=Book"
-font-2 = "Ubuntu:size=12:style:italic"
+font-0 = Ubuntu:size=12
+font-1 = Ubuntu:size=12:style:italic
+font-2 = Font Awesome 5 Free:pixelsize=12
+font-3 = Font Awesome 5 Free Solid:pixelsize=12
+font-4 = Font Awesome 5 Brands:pixelsize=12
+
+format-prefix-font = 2
 
 modules-left = i3 xwindow
 modules-center = music
@@ -89,7 +94,7 @@ tray-position =
 type = internal/xwindow
 label = %title%
 label-maxlen = 50
-label-font = 3
+label-font = 2
 label-foreground = ${colors.foreground}
 
 [module/xkeyboard]
@@ -99,10 +104,9 @@ blacklist-0 = num lock
 format = <label-layout> <label-indicator>
 
 ; format-prefix = 
-format-prefix = 
+format-prefix = 
 format-prefix-foreground = ${colors.secondary}
 format-prefix-underline = ${colors.secondary}
-format-prefix-font = 4
 format-prefix-padding = 1
 
 label-layout = %layout%
@@ -159,28 +163,16 @@ label-urgent-padding = 3
 ; Separator in between workspaces
 ; label-separator = |
 
-ws-icon-0 = Web;
+ws-icon-0 = Web;
 ws-icon-1 = Terminal;
-ws-icon-2 = Documents;
-ws-icon-3 = Media;
+ws-icon-2 = Documents;
+ws-icon-3 = Media;
 ws-icon-4 = Games;
 ws-icon-5 = Other;
 ws-icon-6 = Other;
 ws-icon-7 = Videochat;
 ws-icon-8 = Chats;
-ws-icon-9 = Music;
-
-; [module/spotify]
-; type = custom/script
-; interval = 1
-; format-prefix = ""
-; format-prefix-padding = 1
-; format-prefix-foreground = #1db954
-; format = <label>
-; exec = python ~/.config/polybar/spotify_status.py -f '{artist} - {song}'
-; format-underline = #1db954
-; click-left = playerctl -p spotify play-pause
-; click-right = i3-msg "[class="Spotify"] focus"
+ws-icon-9 = Music;
 
 [module/music]
 type = custom/script

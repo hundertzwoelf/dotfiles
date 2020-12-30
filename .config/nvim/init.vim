@@ -11,6 +11,9 @@ filetype off
 " Load plugins here (vim-plug)
 call plug#begin()
 
+" Git
+Plug 'tpope/vim-fugitive' " awesome git plugin
+
 " Syntax
 Plug 'scrooloose/syntastic' " better syntax highlighting
 Plug 'PotatoesMaster/i3-vim-syntax' " enabling proper syntax highlighting for i3 config file
@@ -41,6 +44,7 @@ Plug 'vim-airline/vim-airline-themes' " Bottom bar themes
 Plug 'rafi/awesome-vim-colorschemes' " several colorschemes
 Plug 'vim-scripts/colorizer' " show hex codes as actual colors
 Plug 'Yggdroot/indentLine' " adding an indentation character for python
+Plug 'lukas-reineke/indent-blankline.nvim' " adding an indentation character for empty lines
 Plug 'chuling/equinusocio-material.vim' " nice theme
 
 " Be more productive
@@ -54,6 +58,7 @@ Plug 'preservim/nerdtree' " nice folder structure tree
 Plug 'dag/vim-fish' " integrate fish shell better
 Plug 'xolox/vim-colorscheme-switcher' " adding a shortcut to switch themes (F8)
 Plug 'xolox/vim-misc' " needed for color-scheme-switcher (I think?)
+Plug 'lambdalisue/suda.vim' " workaround to write read-only files
 
 call plug#end()
 filetype plugin on
@@ -111,12 +116,12 @@ runtime! macros/matchit.vim
 " Color scheme (terminal)
 set background=dark
 set termguicolors
-colorscheme equinusocio_material
+colorscheme onedark
 
 " Highlighting
 hi Normal guibg=NONE ctermbg=NONE
-hi Conceal guifg=1 guibg=NONE
-" hi Folded guibg=#86e295
+hi Conceal guifg=#61AFEF guibg=NONE
+hi Folded guibg=#61AFEF
 
 " Allow hidden buffers
 set hidden
@@ -182,15 +187,27 @@ cnoremap ;; <C-c><ESC>
 tnoremap ;; <ESC>
 onoremap ;; <ESC>
 
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+cmap w!! :SudaWrite
+
 " Leader commands
+" Edit nvim config file
+nnoremap <Leader>ve :e ~/.config/nvim/init.vim<CR>
+" Reload nvim config file
+nnoremap <Leader>vr :source ~/.config/nvim/init.vim<CR>
+" Toggle color highlighting
 nnoremap <Leader>h :ColorToggle<CR>
+" Open up fish shell
 nnoremap <Leader>tt :vnew term://fish<CR>i
-nnoremap <leader>j :BuffergatorMruCyclePrev<CR>
-nnoremap <leader>k :BuffergatorMruCycleNext<CR>
-nnoremap <leader>bd :bd<CR>
+" Open empty buffer
 nnoremap <leader>e :enew<CR>
+" REPL commands
 nnoremap <leader>rp :Repl<CR>
-" nnoremap <leader>p :CtrlP<cr>
+vnoremap <leader>rp :Repl<CR>
+nnoremap <leader>rs :ReplSend<CR>
+vnoremap <leader>rs :ReplSend<CR>
+nnoremap <leader>ra :ReplAuto<CR>
+" toggle spellcheck
 nnoremap <leader>s :setlocal spell!<CR>
 
 " F commands
@@ -239,15 +256,15 @@ let g:vimtex_compiler_latexmk = {
 let g:vimtex_complete_close_braces = 1
 let g:vimtex_view_method = 'zathura'
 let g:vimtex_compiler_progname = 'nvr'
+let g:vimtex_view_automatic = 0
 
 au FileType tex call SetTexOptions()
-au ColorScheme * hi clear Conceal
+" au ColorScheme *.tex highlight Conceal ctermfg=4
 
 function SetTexOptions()
     setlocal spell
-    " iabbrev align \begin{align*}<CR>]]<ESC>O
-    " iabbrev verbatim \begin{verbatim}<CR>]]<ESC>O
     setlocal cole=2
+    setlocal cocu=v
 endfunction
 
 " Tex folding
@@ -269,9 +286,12 @@ let g:NERDSpaceDelims = 1
 map <C-n> :NERDTreeToggle<CR>
 
 " Better indentation
-" let g:indentLine_char = '▏'
-" let g:indentLine_fileType = ['c', 'cpp', 'python']
-" let g:indentLine_setColors = 0
+let g:indentLine_char = '▏'
+let g:indentLine_fileType = ['c', 'cpp', 'python']
+let g:indentLine_setColors = 0
+
+let g:indent_blankline_extra_indent_level = -1
+let g:indent_blankline_char = '▏'
 
 " Pymode
 let g:pymode = 1
@@ -282,28 +302,40 @@ let g:pymode_preview_height = 12
 let g:pymode_preview_position = 'botright'
 let g:pymode_run = 1
 let g:pymode_run_bind = '<F12>'
+let g:pymode_breakpoint = 0
+let g:pymode_trim_whitespaces = 0
+let g:pymode_options_colorcolumn = 0
 
 " Disable pep8
 " let g:python_recommended_style = 0
 
 " vim-startify
 let g:startify_custom_header =
-            \ startify#pad(split(system('figlet -c -f slant neovim | lolcat'), '\n'))
+            \ startify#pad(split(system('figlet -c -f slant neovim'), '\n'))
 
 
 " fzf-vim
 let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
 let g:fzf_preview_window = 'right:60%'
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
 nnoremap <C-P> :Files ~<CR>
 nnoremap <leader>p :Files<CR>
-imap <c-x><c-f> <plug>(fzf-complete-path)
-autocmd! FileType fzf set laststatus=0 noshowmode noruler norelativenumber
-  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
-
 " Mapping selecting mappings
 nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
 omap <leader><tab> <plug>(fzf-maps-o)
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+autocmd! FileType fzf set laststatus=0 noshowmode noruler norelativenumber
+  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+
 
 " Pandoc
 let g:md_pdf_viewer="zathura"
+
+let g:reply_repls = {
+            \   'python': ['ptpython']
+            \ }
+
+let g:suda_smart_edit = 1
