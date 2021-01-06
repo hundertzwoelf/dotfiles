@@ -1,6 +1,6 @@
 #!/bin/bash
 
-OPTIONS="\tSuspend\n\tLogout\n\tShutdown\n\tReboot\n\tRestart LightDM"
+OPTIONS="\tSuspend\n\tLogout\n\tShutdown\n\tReboot\n\tRestart LightDM"
 
 
 option=`echo -e $OPTIONS | awk '{print $1}' | tr -d '\r\n\t'`

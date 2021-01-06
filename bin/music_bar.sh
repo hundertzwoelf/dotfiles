@@ -33,4 +33,4 @@ player=${players[$i]}
 
 [[ $i -gt $total ]] && echo 0 > /tmp/music.id
 
-playerctl metadata --player $player --format "{{artist}} - {{title}}" 2> /dev/null
+playerctl metadata --player $player --format "[{{ playerName }}] {{artist}} - {{ title }}" 2> /dev/null
