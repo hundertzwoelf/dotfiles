@@ -212,7 +212,7 @@ bindsym $mod+Shift+p exec --no-startup-id $HOME/.config/rofi/pulse-sink.sh
 # Mute main microphone input
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
-# Media keybindings (that prefer spotify)
+# Media keybindings (with priority spotify)
 bindsym $mod+XF86Search exec --no-startup-id "playerctl --player=spotify,%any play-pause"
 bindsym $mod+XF86LaunchA exec --no-startup-id "playerctl --player=spotify,%any next"
 bindsym $mod+XF86Tools exec --no-startup-id "playerctl --player=spotify,%any previous"
