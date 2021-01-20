@@ -17,7 +17,6 @@
 ;==========================================================
 
 [colors]
-; background = #002f343f
 ; background = #2f343f
 background = #14161B
 background-alt = #5e697d
@@ -49,11 +48,12 @@ padding-right = 0
 module-margin-left = 1
 module-margin-right = 1
 
-font-0 = Ubuntu:size=12
-font-1 = Ubuntu:size=12:style:italic
-font-2 = Font Awesome 5 Free:pixelsize=12
+font-0 = Noto Sans:size=12
+font-1 = Noto Sans:size=12:style:italic
+font-2 = Noto Sans:size=12:style:bold
 font-3 = Font Awesome 5 Free Solid:pixelsize=12
 font-4 = Font Awesome 5 Brands:pixelsize=12
+font-5 = Symbola:size=14
 
 format-prefix-font = 2
 
@@ -64,7 +64,7 @@ modules-right = xkeyboard screen network cpu battery date
 tray-position = right
 tray-background = ${colors.background}
 tray-detached = false
-tray-maxsize = 24
+tray-maxsize = 26
 
 dpi = 96
 
@@ -72,8 +72,8 @@ dpi = 96
 
 ;override-redirect = true
 
-;scroll-up = i3wm-wsnext
-;scroll-down = i3wm-wsprev
+; scroll-up = i3wm-wsnext
+; scroll-down = i3wm-wsprev
 
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -118,7 +118,7 @@ label-indicator-on-background = ${colors.secondary}
 label-indicator-on-foreground = ${colors.foreground}
 label-indicator-on-underline = ${colors.secondary}
 
-indicator-icon-default = 
+indicator-icon-default =
 indicator-icon-0 = caps lock;;
 label-indicator-on = %icon%
 
@@ -128,7 +128,7 @@ format = <label-state> <label-mode>
 index-sort = true
 wrapping-scroll = false
 strip-wsnumbers = true
-enable-scroll = false
+enable-scroll = true
 fuzzy-match = true
 
 ; Only show workspaces on the same output as the bar
@@ -140,14 +140,14 @@ label-mode-background = ${colors.primary}
 
 
 ; focused = Active workspace on focused monitor
-label-focused = %{F#5294e2}%icon%%{F-}  %name%
+label-focused = %{F#5294e2}%icon%  %{T3}%name%%{T-}%{F-}
 label-focused-background = ${colors.background}
 label-focused-underline= ${colors.primary}
-label-focused-padding = 3
+label-focused-padding = 2
 
 ; unfocused = Inactive workspace on any monitor
 label-unfocused = %icon%
-label-unfocused-padding = 3
+label-unfocused-padding = 2
 
 ; visible = Active workspace on unfocused monitor
 label-visible =  %icon%  %name%
@@ -178,16 +178,17 @@ ws-icon-9 = Music;
 type = custom/script
 interval = 1
 format = <label>
-format-prefix = 
-format-prefix-padding = 1
-format-prefix-foreground = #00FF9E
+; format-prefix = 
+; format-prefix-padding = 1
+; format-prefix-foreground = #00FF9E
 format-underline = #00FF9E
-; exec = playerctl metadata --format "{{artist}} - {{title}}" 2> /dev/null
 exec = music_bar.sh
 label-maxlen = 50
 click-left = music_bar.sh --play
 click-right = music_bar.sh --ws
 click-middle= music_bar.sh --switch
+label-margin-left = 0
+label-margin-right = 3
 
 [module/screen]
 type = custom/script
@@ -200,6 +201,7 @@ format-prefix = 
 format-prefix-padding = 1
 format-prefix-foreground = #ffff00
 format-underline = #ffff00
+click-left = redshift -x
 
 [module/cpu]
 type = internal/cpu
@@ -355,7 +357,7 @@ screenchange-reload = true
 ; compositing-background = screen
 ; compositing-foreground = source
 ; compositing-border = over
-pseudo-transparency = true
+pseudo-transparency = false
 
 [global/wm]
 margin-top = 5

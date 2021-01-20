@@ -11,7 +11,7 @@ set $mod Mod4
 set $terminal alacritty
 
 # set a font
-font pango:Ubuntu Monospace 12
+font pango:Noto Sans, Regular 12
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -36,6 +36,7 @@ assign [class="Rambox"] $ws9
 assign [class="Ferdi"] $ws9
 assign [class="Slack"] $ws9
 assign [class="TelegramDesktop"] $ws9
+assign [class="Signal"] $ws9
 assign [class="discord"] $ws9
 assign [class="whatsapp-nativefier*"] $ws9
 for_window [class="Spotify"] move to workspace $ws10
@@ -75,8 +76,6 @@ set $bg-color             #1a1a1a
 set $text-color           #f5f6f7
 set $inactive-text-color  #f5f6f7
 set $urgent-bg-color      #880000
-# set $border-color         #f5f6f7
-# set $border-color         #FF0000
 set $border-color         #61AFEF
 
 # class                 border          backgr.         text                    indicator
@@ -185,15 +184,19 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 
 bindsym $mod+bracketleft focus output left
 bindsym $mod+bracketright focus output right
+bindsym $mod+Mod1+bracketleft focus output down
+bindsym $mod+Mod1+bracketright focus output up
 
 bindsym $mod+Shift+bracketleft move workspace to output left
 bindsym $mod+Shift+bracketright move workspace to output right
+bindsym $mod+Shift+Mod1+bracketleft move workspace to output down
+bindsym $mod+Shift+Mod1+bracketright move workspace to output up
 
 bindsym $mod+grave scratchpad show
 bindsym $mod+Shift+grave move container to scratchpad
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
+bindsym $mod+r reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 
@@ -210,7 +213,7 @@ bindsym $mod+Shift+p exec --no-startup-id $HOME/.config/rofi/pulse-sink.sh
 ##########################
 
 # Mute main microphone input
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && notify-send "Toggled microphone"
 
 # Media keybindings (with priority spotify)
 bindsym $mod+XF86Search exec --no-startup-id "playerctl --player=spotify,%any play-pause"
@@ -237,20 +240,20 @@ bindsym XF86PowerOff exec --no-startup-id systemctl suspend
 # Start Chromium
 bindsym $mod+c exec --no-startup-id /usr/bin/chromium %U
 
-# Start ranger
-bindsym $mod+r exec --no-startup-id $terminal -e ranger
-
 # Start nvim
 bindsym $mod+v exec --no-startup-id $terminal -e nvim
 
 # Toggle picom
 bindsym $mod+p exec --no-startup-id picom-toggle
 
+# Toggle dunst
+bindsym $mod+n exec --no-startup-id dunst_toggle.sh
+
 # Toggle Drive mounting
 bindsym $mod+m exec --no-startup-id toggleDrive
 
 # Random wallpaper
-bindsym $mod+shift+w exec --no-startup-id random-wall.sh
+bindsym $mod+shift+w exec --no-startup-id randomWall
 
 # Open emoji picker
 bindsym $mod+semicolon exec --no-startup-id splatmoji type
@@ -272,7 +275,7 @@ bindsym --release $mod+shift+x exec --no-startup-id xkill
 #################
 
 # set the keyboard layouts
-exec --no-startup-id setxkbmap -layout us,de,ro -variant alt-intl-unicode,, -option "grp:alt_space_toggle"
+exec --no-startup-id setxkbmap -layout us,de,ro -variant alt-intl-unicode,, -option "grp:alt_space_toggle, caps:swapescape"
 
 # hook light-locker into suspend
 exec --no-startup-id xss-lock -l light-locker-command -l
@@ -281,12 +284,13 @@ exec --no-startup-id xss-lock -l light-locker-command -l
 exec --no-startup-id libinput_settings.fish
 
 # Set a wallpaper
-# exec --no-startup-id nitrogen --restore
-exec --no-startup-id random-wall.sh
+exec --no-startup-id nitrogen --restore
+# exec --no-startup-id random-wall.sh
 
 # Launch essential programs
 exec_always --no-startup-id ~/.config/polybar/launch.sh
-exec --no-startup-id picom -b --config ~/.config/picom.conf
+# exec --no-startup-id picom -b
+exec_always --no-startup-id restart_picom
 exec --no-startup-id pa-applet
 exec --no-startup-id dunst -i
 exec --no-startup-id nm-applet
@@ -297,4 +301,3 @@ exec --no-startup-id indicator-cpufreq
 exec --no-startup-id light-locker
 exec --no-startup-id i3-swallow.py
 exec --no-startup-id redshift-gtk
-exec --no-startup-id switchcaps

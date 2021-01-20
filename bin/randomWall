@@ -1,0 +1,11 @@
+#!/bin/bash
+
+DUAL=$(cat /sys/class/drm/card0/card0-HDMI-A-2/status)
+
+
+if [ "$DUAL" == "connected" ]; then
+    nitrogen --head=0 --set-zoom-fill --random --save
+    nitrogen --head=1 --set-zoom-fill --random --save
+else
+    nitrogen --head=0 --set-zoom-fill --random --save
+fi

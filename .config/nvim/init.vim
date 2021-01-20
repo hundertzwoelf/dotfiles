@@ -48,16 +48,14 @@ Plug 'lukas-reineke/indent-blankline.nvim' " adding an indentation character for
 Plug 'chuling/equinusocio-material.vim' " nice theme
 
 " Be more productive
-Plug 'preservim/nerdcommenter' " comment lines with a shortcut
+Plug 'preservim/nerdcommenter' " comment lines with handy keybindings
 Plug 'jeetsukumaran/vim-buffergator' " handling buffers more easily
 Plug 'junegunn/fzf.vim' " fuzzy-finding files and other things
-Plug 'matze/vim-tex-fold' " allow folding in tex docs
 Plug 'preservim/nerdtree' " nice folder structure tree
+Plug 'tpope/vim-surround' " change surroundings easily
 
 " Other
 Plug 'dag/vim-fish' " integrate fish shell better
-Plug 'xolox/vim-colorscheme-switcher' " adding a shortcut to switch themes (F8)
-Plug 'xolox/vim-misc' " needed for color-scheme-switcher (I think?)
 Plug 'lambdalisue/suda.vim' " workaround to write read-only files
 
 call plug#end()
@@ -121,7 +119,7 @@ colorscheme onedark
 " Highlighting
 hi Normal guibg=NONE ctermbg=NONE
 hi Conceal guifg=#61AFEF guibg=NONE
-hi Folded guibg=#61AFEF
+" hi Folded guibg=#61AFEF
 
 " Allow hidden buffers
 set hidden
@@ -163,6 +161,7 @@ tnoremap <Esc> <C-\><C-n>
 
 " Formatting
 map <leader>q gqip
+map <leader>= =ip
 
 " Resize split windows
 noremap <silent> <C-Right> :vertical resize +3<CR>
@@ -186,9 +185,6 @@ vnoremap ;; <ESC>
 cnoremap ;; <C-c><ESC>
 tnoremap ;; <ESC>
 onoremap ;; <ESC>
-
-" Allow saving of files as sudo when I forgot to start vim using sudo.
-cmap w!! :SudaWrite
 
 " Leader commands
 " Edit nvim config file
@@ -221,10 +217,10 @@ au FileType python nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
 " TODO maybe better shortcuts?
 inoremap <M-j> <ESC>/<++><CR>cw
 inoremap <M-k> <ESC>?<++><CR>cw
-nnoremap <M-j> /<++><CR>cw
-nnoremap <M-k> ?<++><CR>cw
+nnoremap <M-j> /<++><CR>cf>
+nnoremap <M-k> ?<++><CR>cf>
 " inserting placeholder
-inoremap <M-i> <++>
+inoremap <M-i> <++> 
 nnoremap <M-i> i<++><ESC>
 
 """""""""""""""""""
@@ -233,7 +229,7 @@ nnoremap <M-i> i<++><ESC>
 
 " Syntastic
 let g:syntastic_tex_lacheck_quiet_messages = { 'regex': '\Vpossible unwanted space at'}
-let g:syntastic_tex_chktex_quiet_messages = { 'regex': ['\VYou should enclose the previous parenthesis', '\Vwrong length of dash'] }
+let g:syntastic_tex_chktex_quiet_messages = { 'regex': ['\VYou should enclose the previous parenthesis', '\Vwrong length of dash',  '\VUse either `` or '] }
 
 " Tex options
 let g:vimtex_compiler_latexmk = {
@@ -248,8 +244,8 @@ let g:vimtex_compiler_latexmk = {
       \   '-verbose',
       \   '-shell-escape',
       \   '-file-line-error',
-      \   '-synctex=1',
       \   '-interaction=nonstopmode',
+      \   '-synctex=1',
       \ ],
       \}
 
@@ -257,6 +253,10 @@ let g:vimtex_complete_close_braces = 1
 let g:vimtex_view_method = 'zathura'
 let g:vimtex_compiler_progname = 'nvr'
 let g:vimtex_view_automatic = 0
+let g:vimtex_format_enabled = 1
+let g:vimtex_fold_enabled = 1
+let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
+let g:vimtex_view_general_options_latexmk = '--unique'
 
 au FileType tex call SetTexOptions()
 " au ColorScheme *.tex highlight Conceal ctermfg=4
@@ -266,13 +266,6 @@ function SetTexOptions()
     setlocal cole=2
     setlocal cocu=v
 endfunction
-
-" Tex folding
-let g:tex_fold_enabled=1
-let g:tex_fold_override_foldtext = 1
-let g:tex_fold_sec_char = '>'
-let g:tex_fold_env_char = 'E'
-let g:tex_fold_additional_envs = ['itemize','align*']
 
 " Airline + Tabline
 let g:airline_powerline_fonts = 1
@@ -296,7 +289,7 @@ let g:indent_blankline_char = '▏'
 " Pymode
 let g:pymode = 1
 let g:pymode_lint = 1 " code checking enabled
-let g:pymode_lint_ignore = ["E501", "E302"] " ignore line too long
+let g:pymode_lint_ignore = ["E501", "E302", "W293"] " ignore line too long
 let g:pymode_options = 1
 let g:pymode_preview_height = 12
 let g:pymode_preview_position = 'botright'
@@ -315,9 +308,6 @@ let g:startify_custom_header =
 
 
 " fzf-vim
-let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
-let g:fzf_preview_window = 'right:60%'
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
 nnoremap <C-P> :Files ~<CR>
 nnoremap <leader>p :Files<CR>
 " Mapping selecting mappings
@@ -329,6 +319,9 @@ imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 autocmd! FileType fzf set laststatus=0 noshowmode noruler norelativenumber
   \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+let $FZF_DEFAULT_COMMAND = 'ag --hidden --ignore .git -g ""'
+let g:fzf_preview_window = 'right:60%'
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
 
 
 " Pandoc
