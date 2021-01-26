@@ -10,15 +10,16 @@ i=( $(cat /tmp/music.id) )
 player=${players[$i]}
 
 # exit if total is nil
-[ $total -eq 0 ] && echo && exit
+[ $total -eq 0 ] && echo #&& exit
+
 
 # skip stopped players (playerctl retains stopped chromium instances)
 # same code as for switch, maybe reuse code ~TODO?
-if [ $(playerctl status --player $player) == "Stopped" ] ; then
+if [ $(playerctl status --player $player 2> /dev/null) == "Stopped" ] ; then
     let new="($i+1) % total"
     player=${players[$new]}
     echo $new > /tmp/music.id
-    exit
+    # exit
 fi
 
 # set the index back to 0
@@ -46,4 +47,5 @@ do
 done
 
 # pretty printing of the output
-playerctl metadata --player $player --format "〔{{ playerName }}〕{{artist}} - {{ title }}" 2> /dev/null
+# playerctl metadata --player $player --format "〔{{ playerName }}〕{{artist}} | {{ title }}" 2> /dev/null
+playerctl metadata --player $player --format "{{ playerName }}┃{{artist}}┃{{ title }}" 2> /dev/null
