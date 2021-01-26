@@ -40,7 +40,6 @@ line-size = 3
 line-color = #ff0000
 
 border-size = 0
-border-color = #00000000
 
 padding-left = 0
 padding-right = 0
@@ -53,27 +52,19 @@ font-1 = Noto Sans:size=12:style:italic
 font-2 = Noto Sans:size=12:style:bold
 font-3 = Font Awesome 5 Free Solid:pixelsize=12
 font-4 = Font Awesome 5 Brands:pixelsize=12
-font-5 = Symbola:size=14
-
-format-prefix-font = 2
+font-5 = Symbola:size=12
 
 modules-left = i3 xwindow
 modules-center = music
 modules-right = xkeyboard screen network cpu battery date
 
 tray-position = right
-tray-background = ${colors.background}
+tray-background = #CC14161B
 tray-detached = false
-tray-maxsize = 26
+tray-maxsize = 24
 
-dpi = 96
+; dpi = 96
 
-;wm-restack = i3
-
-;override-redirect = true
-
-; scroll-up = i3wm-wsnext
-; scroll-down = i3wm-wsprev
 
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -88,7 +79,7 @@ modules-left   = i3
 modules-center = music
 modules-right  =
 
-tray-position =
+tray-position = none
 
 [module/xwindow]
 type = internal/xwindow
@@ -96,6 +87,7 @@ label = %title%
 label-maxlen = 50
 label-font = 2
 label-foreground = ${colors.foreground}
+label-padding = 1
 
 [module/xkeyboard]
 type = internal/xkeyboard
@@ -134,16 +126,18 @@ fuzzy-match = true
 ; Only show workspaces on the same output as the bar
 pin-workspaces = true
 
+; i3 modes like gap mode
 label-mode-padding = 3
-label-mode-foreground = #000
+label-mode-foreground = ${colors.foreground}
 label-mode-background = ${colors.primary}
 
 
 ; focused = Active workspace on focused monitor
-label-focused = %{F#5294e2}%icon%  %{T3}%name%%{T-}%{F-}
+label-focused = %{F#5294e2}%icon%  %name%%{F-}
 label-focused-background = ${colors.background}
 label-focused-underline= ${colors.primary}
 label-focused-padding = 2
+label-focused-font = 3
 
 ; unfocused = Inactive workspace on any monitor
 label-unfocused = %icon%
@@ -158,10 +152,11 @@ label-visible-padding = ${self.label-focused-padding}
 ; urgent = Workspace with urgency hint set
 label-urgent = %icon%  %name%
 label-urgent-background = ${colors.alert}
-label-urgent-padding = 3
+label-urgent-padding = 2
 
 ; Separator in between workspaces
 ; label-separator = |
+; label-separator = │
 
 ws-icon-0 = Web;
 ws-icon-1 = Terminal;
@@ -177,18 +172,18 @@ ws-icon-9 = Music;
 [module/music]
 type = custom/script
 interval = 1
+exec = music_bar.sh
 format = <label>
 ; format-prefix = 
 ; format-prefix-padding = 1
 ; format-prefix-foreground = #00FF9E
 format-underline = #00FF9E
-exec = music_bar.sh
-label-maxlen = 50
+label-maxlen = 55
+label-margin-left = 1
+label-margin-right = 1
 click-left = music_bar.sh --play
 click-right = music_bar.sh --ws
 click-middle= music_bar.sh --switch
-label-margin-left = 0
-label-margin-right = 3
 
 [module/screen]
 type = custom/script
@@ -279,55 +274,14 @@ animation-charging-1 = 
 animation-charging-2 = 
 animation-charging-3 = 
 animation-charging-foreground = #39f
-animation-charging-framerate = 2000
+animation-charging-framerate = 1000
 
 animation-discharging-0 = 
 animation-discharging-1 = 
 animation-discharging-2 = 
 animation-discharging-3 = 
 animation-discharging-foreground = #fc0
-animation-discharging-framerate = 2000
-
-; [module/powermenu]
-; type = custom/menu
-
-; expand-left = true
-
-; format-spacing = 1
-
-; label-open = 
-; label-open-foreground = ${colors.secondary}
-; label-close = 
-; label-close-foreground = ${colors.secondary}
-; label-separator = |
-; label-separator-foreground = ${colors.foreground-alt}
-
-; menu-0-0 = reboot
-; menu-0-0-exec = menu-open-1
-; menu-0-1 = power off
-; menu-0-1-exec = menu-open-2
-; menu-0-2 = suspend
-; menu-0-2-exec = menu-open-3
-
-; menu-1-0 = cancel
-; menu-1-0-exec = menu-open-0
-; menu-1-1 = reboot
-; menu-1-1-exec = systemctl reboot
-
-; menu-2-0 = power off
-; menu-2-0-exec = systemctl poweroff
-; menu-2-1 = cancel
-; menu-2-1-exec = menu-open-0
-
-; menu-3-0 = suspend
-; menu-3-0-exec = systemctl suspend
-; menu-3-1 = cancel
-; menu-3-1-exec = menu-open-0
-
-; [module/kdeconnect]
-; type = custom/script
-; exec = "~/.config/polybar/polybar-kdeconnect.sh -d"
-; tail = true
+animation-discharging-framerate = 1000
 
 [module/jgmenu]
 type = custom/text
