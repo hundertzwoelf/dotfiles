@@ -79,15 +79,6 @@ set modelines=1
 " Show line numbers
 set number relativenumber
 
-" Show file stats
-set ruler
-
-" Blink cursor on error instead of beeping (grr)
-set visualbell
-
-" Command autocompletion
-set wildmenu
-
 " Mouse
 set mouse=a
 
@@ -108,8 +99,8 @@ set shiftround
 set scrolloff=3
 set sidescrolloff=3
 set backspace=indent,eol,start
-set matchpairs+=<:> " use % to jump between pairs
-runtime! macros/matchit.vim
+set matchpairs+=<:> " use % to jump between < and >
+set showmatch
 
 " Color scheme (terminal)
 set background=dark
@@ -122,16 +113,12 @@ hi Conceal guifg=#61AFEF guibg=NONE
 " hi Folded guibg=#61AFEF
 
 " Allow hidden buffers
-set hidden
+set nohidden
 
 " Spelling
 set spelllang=de,en
 
-" Status bar
-set laststatus=2
-
-" Last line
-set showmode
+" Show commands in the bottom right
 set showcmd
 
 " Set confirm
@@ -144,9 +131,8 @@ set hlsearch
 set incsearch
 set ignorecase
 set smartcase
-set showmatch
 " clear search
-map <leader>/ :let @/=''<cr>
+map <leader>/ :nohl<CR>
 
 " Enabling undo across sessions
 set undofile
@@ -186,6 +172,11 @@ cnoremap ;; <C-c><ESC>
 tnoremap ;; <ESC>
 onoremap ;; <ESC>
 
+" some insert mode simplifications
+inoremap <C-]> <C-X><C-]>
+inoremap <C-F> <C-X><C-F>
+inoremap <C-L> <C-X><C-L>
+
 " Leader commands
 " Edit nvim config file
 nnoremap <Leader>ve :e ~/.config/nvim/init.vim<CR>
@@ -220,8 +211,8 @@ inoremap <M-k> <ESC>?<++><CR>cw
 nnoremap <M-j> /<++><CR>cf>
 nnoremap <M-k> ?<++><CR>cf>
 " inserting placeholder
-inoremap <M-i> <++> 
-nnoremap <M-i> i<++><ESC>
+inoremap <M-i> <++><Space>
+nnoremap <M-i> i<++> <ESC>
 
 """""""""""""""""""
 " Plugin settings "
