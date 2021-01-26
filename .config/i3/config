@@ -9,6 +9,7 @@ set $mod Mod4
 
 # set a standard terminal
 set $terminal alacritty
+# set $terminal urxvt
 
 # set a font
 font pango:Noto Sans, Regular 12
@@ -88,9 +89,17 @@ smart_borders on
 
 # Configure gaps
 default_border pixel 3
-gaps inner 7
-gaps outer 10
+gaps inner 10
+gaps outer 0
 smart_gaps on
+
+set $mode_gaps Toggle gaps: (1) on (2) off
+bindsym $mod+g mode "$mode_gaps"
+mode "$mode_gaps" {
+    bindsym 1 mode "default", gaps inner all set 10, gaps outer all set 0
+    bindsym 2 mode "default", gaps inner all set 0, gaps outer all set 0
+    bindsym Escape mode "default"
+}
 
 #################
 ### SHORTCUTS ###
@@ -264,8 +273,8 @@ bindsym Ctrl+Mod1+Left workspace prev
 bindsym Ctrl+Mod1+Right workspace next
 
 # Change gap size
-bindsym $mod+g gaps inner all plus 5
-bindsym $mod+shift+g gaps inner all minus 5
+# bindsym $mod+g gaps inner all plus 5
+# bindsym $mod+shift+g gaps inner all minus 5
 
 # Launch xkill
 bindsym --release $mod+shift+x exec --no-startup-id xkill
