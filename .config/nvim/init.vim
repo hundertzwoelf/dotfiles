@@ -48,7 +48,7 @@ Plug 'lukas-reineke/indent-blankline.nvim' " adding an indentation character for
 Plug 'chuling/equinusocio-material.vim' " nice theme
 
 " Be more productive
-Plug 'preservim/nerdcommenter' " comment lines with handy keybindings
+Plug 'tomtom/tcomment_vim' " toggle comments easily
 Plug 'jeetsukumaran/vim-buffergator' " handling buffers more easily
 Plug 'junegunn/fzf.vim' " fuzzy-finding files and other things
 Plug 'preservim/nerdtree' " nice folder structure tree
