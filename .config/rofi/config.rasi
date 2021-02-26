@@ -1,9 +1,14 @@
 configuration {
-theme: "/usr/share/rofi/themes/onedark.rasi";
-lines: 5;
+theme: "/usr/share/rofi/themes/material2.rasi";
+lines: 8;
 terminal: "alacritty";
 show-icons: true;
-icon-theme: "Vibrancy-Full-Dark-Teal";
+icon-theme: "Tela black";
+modi:  "drun,run,power:~/.config/rofi/power.sh,window";
+}
+
+element-icon {
+    size: 1.6em;
 }
 
 /* nice themes: sidetab */

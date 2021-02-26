@@ -22,8 +22,8 @@ set $ws1 "1: Web"
 set $ws2 "2: Terminal"
 set $ws3 "3: Documents"
 set $ws4 "4: Media"
-set $ws5 "5: Games"
-set $ws6 "6: Other"
+set $ws5 "5: Mail"
+set $ws6 "6: Games"
 set $ws7 "7: Other"
 set $ws8 "8: Videochat"
 set $ws9 "9: Chats"
@@ -33,6 +33,7 @@ set $ws10 "10: Music"
 # for some reason spotify doesn't work like the others
 assign [class="Kodi"] $ws4
 assign [class="vlc"] $ws4
+assign [class="Mailspring"] $ws5
 assign [class="Rambox"] $ws9
 assign [class="Ferdi"] $ws9
 assign [class="Slack"] $ws9
@@ -84,7 +85,7 @@ client.focused          $border-color   $border-color   $text-color             
 client.focused_inactive $bg-color       $bg-color       $inactive-text-color
 client.unfocused        $bg-color       $bg-color       $inactive-text-color
 
-hide_edge_borders smart
+hide_edge_borders none
 smart_borders on
 
 # Configure gaps
@@ -112,7 +113,7 @@ bindsym $mod+Return exec --no-startup-id $terminal
 bindsym $mod+Shift+q kill
 
 # toggle borders
-bindsym $mod+b [class="^.*"] border toggle
+bindsym $mod+b border toggle
 
 # start rofi
 bindsym $mod+d exec --no-startup-id rofi -show drun
@@ -201,6 +202,7 @@ bindsym $mod+Shift+bracketright move workspace to output right
 bindsym $mod+Shift+Mod1+bracketleft move workspace to output down
 bindsym $mod+Shift+Mod1+bracketright move workspace to output up
 
+# scratchpad
 bindsym $mod+grave scratchpad show
 bindsym $mod+Shift+grave move container to scratchpad
 
@@ -210,12 +212,16 @@ bindsym $mod+r reload
 bindsym $mod+Shift+r restart
 
 # custom rofi menus
-# power menu
+# power menu (e for exit)
 bindsym $mod+Shift+e exec --no-startup-id rofi -show Power -modi Power:$HOME/.config/rofi/power.sh
-# screen layout menu
+# screen layout menu (s for screen)
 bindsym $mod+Shift+s exec --no-startup-id rofi -show Screen -modi Screen:$HOME/.config/rofi/screen.sh
-# pulseaudio sink menu
-bindsym $mod+Shift+p exec --no-startup-id $HOME/.config/rofi/pulse-sink.sh
+# pulseaudio sink menu (a for audio)
+bindsym $mod+Shift+a exec --no-startup-id $HOME/.config/rofi/pulse-sink.sh
+# emoji picker
+bindsym $mod+semicolon exec --no-startup-id splatmoji type
+bindsym $mod+shift+semicolon exec --no-startup-id splatmoji copy
+
 
 ##########################
 ### CUSTOM KEYBINDINGS ###
@@ -240,14 +246,25 @@ bindsym XF86Explorer exec --no-startup-id nautilus
 bindsym XF86Tools exec --no-startup-id manjaro-settings-manager
 
 # open interactive screenshot application
-bindsym Print exec --no-startup-id gnome-screenshot -i
+# bindsym Print exec --no-startup-id gnome-screenshot -i
+bindsym --release Print exec --no-startup-id "maim -u --format png /tmp/screenshot-$(date +'%Y-%m-%d_%T').png \
+    && notify-send 'maim' 'Screenshot saved to /tmp'"
+bindsym --release Shift+Print exec --no-startup-id  "maim -u --format png /dev/stdout \
+    | xclip -selection clipboard -target image/png -i \
+    && notify-send 'maim' 'Screenshot copied to clipboard'"
+bindsym --release $mod+Print exec --no-startup-id "maim -u -i $(xdotool getactivewindow) --format png /tmp/screenshot-$(date +'%Y-%m-%d_%T').png \
+    && notify-send 'maim' 'Window screenshot saved to /tmp'"
+bindsym --release $mod+Shift+Print exec --no-startup-id  "maim -u -i $(xdotool getactivewindow) --format png /dev/stdout \
+    | xclip -selection clipboard -target image/png -i \
+    && notify-send 'maim' 'Window screenshot copied to clipboard'"
 
 # Screenlocking and suspending
 bindsym $mod+x exec --no-startup-id i3lock-fancy
 bindsym XF86PowerOff exec --no-startup-id systemctl suspend
 
 # Start Chromium
-bindsym $mod+c exec --no-startup-id /usr/bin/chromium %U
+# bindsym $mod+c exec --no-startup-id /usr/bin/chromium %U
+bindsym $mod+c exec --no-startup-id firefox
 
 # Start nvim
 bindsym $mod+v exec --no-startup-id $terminal -e nvim
@@ -264,13 +281,12 @@ bindsym $mod+m exec --no-startup-id toggleDrive
 # Random wallpaper
 bindsym $mod+shift+w exec --no-startup-id randomWall
 
-# Open emoji picker
-bindsym $mod+semicolon exec --no-startup-id splatmoji type
-bindsym $mod+shift+semicolon exec --no-startup-id splatmoji copy
-
 # Cycle through workspaces (also helper for libinput-gestures basically)
 bindsym Ctrl+Mod1+Left workspace prev
 bindsym Ctrl+Mod1+Right workspace next
+
+# Open pavucontrol
+bindsym $mod+Shift+p exec --no-startup-id pavucontrol
 
 # Change gap size
 # bindsym $mod+g gaps inner all plus 5
@@ -297,7 +313,7 @@ exec --no-startup-id nitrogen --restore
 # exec --no-startup-id random-wall.sh
 
 # Launch essential programs
-exec_always --no-startup-id ~/.config/polybar/launch.sh
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 # exec --no-startup-id picom -b
 exec_always --no-startup-id restart_picom
 exec --no-startup-id pa-applet

@@ -29,14 +29,14 @@ alert = #bd2c40
 [bar/bar1]
 ; monitor = ${env:MONITOR:HDMI-1}
 width = 100%
-height = 40
+height = 35
 radius = 0.0
 fixed-center = true
 
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-line-size = 3
+line-size = 2
 line-color = #ff0000
 
 border-size = 0
@@ -56,10 +56,10 @@ font-5 = Symbola:size=12
 
 modules-left = i3 xwindow
 modules-center = music
-modules-right = xkeyboard screen network cpu battery date
+modules-right = xkeyboard screen network temperature cpu battery date
 
 tray-position = right
-tray-background = #CC14161B
+; tray-background = #CC14161B
 tray-detached = false
 tray-maxsize = 24
 
@@ -150,7 +150,7 @@ label-visible-underline = ${self.label-focused-underline}
 label-visible-padding = ${self.label-focused-padding}
 
 ; urgent = Workspace with urgency hint set
-label-urgent = %icon%  %name%
+label-urgent = %icon% %name%
 label-urgent-background = ${colors.alert}
 label-urgent-padding = 2
 
@@ -162,8 +162,8 @@ ws-icon-0 = Web;
 ws-icon-1 = Terminal;
 ws-icon-2 = Documents;
 ws-icon-3 = Media;
-ws-icon-4 = Games;
-ws-icon-5 = Other;
+ws-icon-4 = Mail;
+ws-icon-5 = Games;
 ws-icon-6 = Other;
 ws-icon-7 = Videochat;
 ws-icon-8 = Chats;
@@ -196,7 +196,6 @@ format-prefix = 
 format-prefix-padding = 1
 format-prefix-foreground = #ffff00
 format-underline = #ffff00
-click-left = redshift -x
 
 [module/cpu]
 type = internal/cpu
@@ -206,29 +205,6 @@ format-prefix-padding = 1
 format-prefix-foreground = #ffa500
 format-underline = #ffa500
 label = %{A1:notify-send "$(ps -Ao user,comm,pid,pcpu --sort=-pcpu | head -n 6)":} %percentage:2%% %{A}
-
-; [module/wlan]
-; type = internal/network
-; interface = wlp1s0
-; interval = 3.0
-; click-left = nm-connection-editor
-
-; format-connected-prefix = 
-; format-connected-prefix-foreground = #9f78e1
-; format-connected-prefix-padding = 1
-
-; format-connected = <label-connected>
-; format-connected-underline = #9f78e1
-
-; label-connected = %essid%
-; ; label-connected = 
-; ; label-connected-foreground = #9f78e1
-
-; format-disconnected =
-; ; format-disconnected = <label-disconnected>
-; format-disconnected-underline = ${self.format-connected-underline}
-; label-disconnected = %ifname% disconnected
-; label-disconnected-foreground = ${colors.foreground-alt}
 
 [module/date]
 type = internal/date
@@ -296,26 +272,60 @@ interval = 1.0
 format-connected = <label-connected>
 format-connected-foreground = ${colors.foreground}
 format-connected-underline = #9f78e1
-format-connected-prefix = 
-format-connected-prefix-padding = 1
+; format-connected-prefix = 
+format-connected-prefix = 
 format-connected-prefix-foreground = #9f78e1
-label-connected = %{A1:nm-connection-editor:} %downspeed:9% %{A}
+label-connected = %{A1:nm-connection-editor:} %downspeed% %{A}
 
 format-disconnected = <label-disconnected>
-label-disconnected = %{A1:nm-connection-editor:} No connection %{A}
+label-disconnected = %{A1:nm-connection-editor:} disconnected %{A}
 format-disconnected-underline = ${colors.alert}
+
+; [module/wlan]
+; type = internal/network
+; interface = wlp1s0
+; interval = 3.0
+; click-left = nm-connection-editor
+
+; format-connected-prefix = 
+; format-connected-prefix-foreground = #9f78e1
+; format-connected-prefix-padding = 1
+
+; format-connected = <label-connected>
+; format-connected-underline = #9f78e1
+
+; label-connected = %essid%
+; ; label-connected = 
+; ; label-connected-foreground = #9f78e1
+
+; format-disconnected =
+; ; format-disconnected = <label-disconnected>
+; format-disconnected-underline = ${self.format-connected-underline}
+; label-disconnected = %ifname% disconnected
+; label-disconnected-foreground = ${colors.foreground-alt}
+
+[module/temperature]
+type = internal/temperature
+label = %temperature-c%
+format = <ramp> <label>
+format-underline = #ff00ff
+units = true
+
+format-warn = <ramp> <label-warn>
+label-warn = %temperature-c%
+label-warn-foreground = #ff0000
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-foreground = #ff00ff
 
 [settings]
 screenchange-reload = true
-; compositing-background = xor
-; compositing-background = screen
-; compositing-foreground = source
-; compositing-border = over
 pseudo-transparency = false
 
 [global/wm]
 margin-top = 5
-margin-bottom = 0
-format-prefix-padding = 1
+margin-bottom = 1
 
 ; vim: ft=dosini

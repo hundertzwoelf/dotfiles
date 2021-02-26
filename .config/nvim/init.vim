@@ -56,7 +56,6 @@ Plug 'tpope/vim-surround' " change surroundings easily
 
 " Other
 Plug 'dag/vim-fish' " integrate fish shell better
-Plug 'lambdalisue/suda.vim' " workaround to write read-only files
 
 call plug#end()
 filetype plugin on
@@ -86,7 +85,7 @@ set mouse=a
 set encoding=utf-8
 set wrap
 set textwidth=79
-set formatoptions=tcqrn1
+" set formatoptions=tcqrn1
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
@@ -113,7 +112,7 @@ hi Conceal guifg=#61AFEF guibg=NONE
 " hi Folded guibg=#61AFEF
 
 " Allow hidden buffers
-set nohidden
+set hidden
 
 " Spelling
 set spelllang=de,en
@@ -123,6 +122,9 @@ set showcmd
 
 " Set confirm
 set confirm
+
+" Set lazyredraw to speed up macros
+set lazyredraw 
 
 " Searching
 nnoremap / /\v
@@ -219,8 +221,8 @@ nnoremap <M-i> i<++> <ESC>
 """""""""""""""""""
 
 " Syntastic
-let g:syntastic_tex_lacheck_quiet_messages = { 'regex': '\Vpossible unwanted space at'}
-let g:syntastic_tex_chktex_quiet_messages = { 'regex': ['\VYou should enclose the previous parenthesis', '\Vwrong length of dash',  '\VUse either `` or '] }
+let g:syntastic_tex_lacheck_quiet_messages = { 'regex': ['\Vpossible unwanted space at', '\Vunwanted spaces'] }
+let g:syntastic_tex_chktex_quiet_messages = { 'regex': ['\VYou should enclose the previous parenthesis', '\Vwrong length of dash',  '\VUse either `` or ', '\Vterminated with space', '\VIntersentence spacing', '\Vunwanted spaces'] }
 
 " Tex options
 let g:vimtex_compiler_latexmk = {
@@ -321,5 +323,3 @@ let g:md_pdf_viewer="zathura"
 let g:reply_repls = {
             \   'python': ['ptpython']
             \ }
-
-let g:suda_smart_edit = 1
